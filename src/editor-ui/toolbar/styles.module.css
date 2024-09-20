@@ -1,0 +1,49 @@
+.Toolbar {
+  padding: .25em;
+}
+
+.Wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
+  
+  mix-blend-mode: multiply;
+}
+
+.ToolbarButton {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ToolbarButton span {
+  font-size: .75em;
+}
+
+.ToolTypeSwitch {
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+  padding-right: .5em; /* It's a hack for an incomprehensible bug. A kind of negative space requires has to be compensated by this. */
+}
+
+.Toggle {
+  cursor: pointer;
+  padding: .25em;
+  border-radius: .2em;
+}
+
+.Toggle:hover {
+  background-color: #0003;
+}
+
+.Toggle.active {
+  color: white;
+  background-color: var(--font-color);
+}

@@ -1,0 +1,12 @@
+.SmallButton {
+  font-size: .66em;
+  background: #fff9;
+  padding: .25em .5em;
+  border-radius: .25em;
+}
+
+.SmallButton.outlined {
+  color: white;
+  border: 1px solid #fff6;
+  background-color: transparent;
+}

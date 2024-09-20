@@ -1,0 +1,88 @@
+.dim {
+  font-style: italic;
+  opacity: .5;
+}
+
+.UUID {
+  font-size: var(--font-size-tiny);
+  font-family: 'Fira Code', monospace;
+}
+
+.TitleSingle {
+  display: flex;
+  flex-direction: column;
+}
+
+.TitleSingle .Parent {
+  font-size: var(--font-size-small);
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  gap: .5em;
+}
+
+.TitleSingle .Parent span:nth-child(2) {
+  opacity: 0;
+  font-style: italic;
+}
+
+.TitleSingle .Parent:hover span:nth-child(2) {
+  opacity: .33;
+}
+
+.TitleSingle .Children {
+  font-size: var(--font-size-small);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.TitleSingle .Children > div {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
+}
+
+.TitleSingle .Children > div > span:nth-child(2) {
+  opacity: 0;
+  font-style: italic;
+}
+
+.TitleSingle .Children > div:hover > span:nth-child(2) {
+  opacity: .33;
+}
+
+.TitleSingle .Children button {
+  margin-top: .5em;
+  background-color: #fff3;
+  border-radius: .15em;
+}
+
+.Geometry {
+  display: flex;
+  flex-direction: column;
+  margin-top: .25em;
+  /* gap: .5em; */
+}
+
+.Geometry > div {
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.SmallButton {
+  font-size: var(--font-size-tiny);
+  padding: 0em .5em;
+  border-radius: .15em;
+  border: solid 1px #fff6;
+  background-color: #fff3;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

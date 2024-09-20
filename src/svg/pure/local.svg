@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+  xmlns="http://www.w3.org/2000/svg">
+  <g id="Local">
+    <path id="Polygon 12" d="M4.95577 7.93301L12 3.86603L19.0442 7.93301V16.067L12 20.134L4.95577 16.067V7.93301Z" stroke="currentColor" stroke-width="1.5"/>
+    <path id="Vector 50" d="M12 12L5 8M12 12L19 8M12 12V20" stroke="currentColor"/>
+    <path id="Vector 51" d="M12 12L19 16M12 12L5 16M12 12L12 4" stroke="currentColor" stroke-opacity="0.25"/>
+  </g>
+</svg>

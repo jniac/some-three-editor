@@ -1,0 +1,55 @@
+.History {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-small);
+}
+
+.Stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.Stack .Command {
+  padding: 0 .25em;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.Stack .Command:hover {
+  background-color: #fff3;
+}
+
+.Stack .Command {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.Stack .Command + .Command {
+  border-top: solid 1px #0001;
+}
+
+.Stack .Command div:first-child {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  gap: .5em;
+  text-overflow: ellipsis;
+}
+
+.Stack .Command div:nth-child(2) {
+  display: none;
+}
+
+.Stack .Command:hover div:nth-child(2) {
+  display: unset;
+}
+
+.Stack .Redo {
+  opacity: .33;
+  font-style: italic;
+}

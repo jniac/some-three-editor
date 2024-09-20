@@ -1,0 +1,135 @@
+
+.TransformPanel {
+  user-select: none;
+}
+
+.Field {
+  font-size: var(--font-size-small);
+
+  display: flex;
+  flex-direction: row;
+  gap: .25em;
+}
+
+.Field input {
+  background-color: #fff2;
+  padding: 0 .25em;
+  border-radius: .125em;
+  transition: background-color .1s ease-in-out;
+}
+
+.Field.dragging input,
+.Field input:focus {
+  background-color: #fff6;
+}
+
+.NumberField label {
+  cursor: ew-resize;
+}
+
+
+
+
+
+.InlineInput {
+  font-size: var(--font-size-small);
+  display: flex;
+  flex-direction: row;
+  gap: .25em;
+}
+
+.InlineInput > .MainLabel {
+  flex: 1;
+}
+
+.InlineInput > div {
+  flex: 3;
+  display: flex;
+  flex-direction: row;
+  gap: .25em;
+  overflow: hidden;
+}
+
+.AtomicInput {
+  flex: 1;
+  font-size: var(--font-size-small);
+  display: flex;
+  flex-direction: row;
+  gap: .125em;
+  overflow: hidden;
+}
+
+.AtomicInput > label {
+  flex: 0 0 auto;
+  padding: 0 .125em;
+  border-radius: .15em;
+}
+
+.AtomicInput > label.draggable {
+  cursor: ew-resize;
+}
+
+.AtomicInput > label.draggable:hover {
+  background-color: #fff3;
+}
+
+.AtomicInput > div {
+  flex: 1;
+}
+
+.AtomicInput > div > * {
+  width: 100%;
+  height: 100%;
+  background-color: #fff3;
+  border-radius: .15em;
+  border: 1px solid transparent;
+}
+
+.AtomicInput > div > input {
+  padding: 0 .25em;
+}
+
+.AtomicInput > div > select {
+  outline: none;
+}
+
+.AtomicInput:hover > div > * {
+  background-color: #fff5;
+  border-color: #fff6;
+}
+
+.AtomicInput.focus > div > * {
+  background-color: #fff8;
+  border-color: #fffa;
+}
+
+.AtomicInput.dragging > label.draggable {
+  background-color: #fff8;
+}
+
+.AtomicInput.multiple:not(.focus) > div::before {
+  content: 'multiple';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 .25em;
+  font-style: italic;
+  font-size: .75em;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.AtomicInput.multiple > label {
+  pointer-events: none;
+  font-style: italic;
+  opacity: .5;
+}
+
+.WhileDragging {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  cursor: ew-resize;
+}

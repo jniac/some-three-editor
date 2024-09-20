@@ -1,0 +1,40 @@
+{
+  "name": "some-three-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "jniac",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18",
+    "some-utils-dom": "workspace:*",
+    "some-utils-react": "workspace:*",
+    "some-utils-three": "workspace:*",
+    "some-utils-ts": "workspace:*",
+    "three": "^0.168.0",
+    "yaml": "^2.5.1"
+  },
+  "devDependencies": {
+    "@svgr/rollup": "^8.1.0",
+    "@types/react": "^18.3.8",
+    "@types/react-dom": "^18",
+    "@types/three": "^0.168.0",
+    "typescript": "^5.6.2"
+  },
+  "exports": {
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "mathjs": "^13.1.1"
+  }
+}
