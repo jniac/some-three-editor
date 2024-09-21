@@ -29,13 +29,18 @@
 
 
 
-
+.Lines {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
 
 .InlineInput {
   font-size: var(--font-size-small);
   display: flex;
   flex-direction: row;
   gap: .25em;
+  height: 18px;
 }
 
 .InlineInput > .MainLabel {

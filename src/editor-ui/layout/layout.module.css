@@ -1,0 +1,6 @@
+
+.Layout > * {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 6px;
+}

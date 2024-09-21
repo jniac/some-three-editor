@@ -51,8 +51,8 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
               return (
                 <line
                   key={i}
-                  x1={x}
-                  x2={'calc(100% - .5px)'}
+                  x1={x + 2}
+                  x2={'calc(100% - 2.5px)'}
                   y1={ly}
                   y2={ly}
                 />
@@ -92,8 +92,8 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
       height='100%'
     >
       <g
-        fill='#fff4'
-        stroke='#fff3'
+        fill='#ffffff11'
+        stroke='#ffffff33'
         strokeWidth='1'
       >
         {selected.generateSvgContent()}
@@ -101,7 +101,7 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
 
       <g
         fill='none'
-        stroke='#fff9'
+        stroke='#ffffff33'
         strokeWidth='1'
       >
         {containsSelected.generateSvgContent()}

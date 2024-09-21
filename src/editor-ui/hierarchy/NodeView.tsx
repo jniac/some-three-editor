@@ -1,4 +1,4 @@
-import { makeClassName } from 'some-utils-react/utils/classname'
+import { makeClassName as mc } from 'some-utils-react/utils/classname'
 import { some } from 'some-utils-ts/iteration/high-order'
 
 import { EventWrapper } from '../utils/EventWrapper'
@@ -12,7 +12,8 @@ import PickableOnSvg from '../../svg/pure/pickable-on.svg'
 import VisibilityOffSvg from '../../svg/pure/visibility-off.svg'
 import VisibilityOnSvg from '../../svg/pure/visibility-on.svg'
 
-import styles from './hierarchy.module.css'
+import ms from '../main.module.css'
+import s from './hierarchy.module.css'
 
 export function NodeView({
   node,
@@ -33,18 +34,18 @@ export function NodeView({
   const containsSelectedChild = !hierarchyOpen && some(node.descendants(), n => n.isSelected)
   return (
     <div
-      className={makeClassName(
-        styles.Node,
-        isSelected && styles.isSelected,
-        selectable && styles.selectable,
-        containsSelectedChild && styles.containsSelectedChild,
+      className={mc(
+        s.Node,
+        isSelected && s.isSelected,
+        selectable && s.selectable,
+        containsSelectedChild && s.containsSelectedChild,
       )}
       onClick={event => {
         event.preventDefault()
         onClick?.(new EventWrapper(event.nativeEvent))
       }}
     >
-      <div className={styles.Background} />
+      <div className={s.Background} />
 
       <div onClick={event => {
         event.preventDefault()
@@ -54,18 +55,18 @@ export function NodeView({
         <LinkA node={node} />
       </div>
 
-      <div className={styles.Label}>
+      <div className={s.Label}>
         {!!node.object.name
           ? (
             <span>{node.object.name}</span>
           ) : (
-            <span className={styles.ConstructorName}>
+            <span className={s.ConstructorName}>
               {node.object.constructor.name}
             </span>
           )}
 
         {childCount > 0 && (
-          <span className={styles.ChildCount}>
+          <span className={s.ChildCount}>
             {node.totalChildCount > childCount
               ? <>({childCount}/{node.totalChildCount})</>
               : <>({childCount})</>
@@ -74,7 +75,7 @@ export function NodeView({
         )}
       </div>
 
-      <div className={styles.RightButtons}>
+      <div className={mc(ms.Abs, s.RightButtons)}>
         <div
           onClick={event => {
             event.preventDefault()
@@ -84,12 +85,12 @@ export function NodeView({
         >
           {node.object.userData.pickable !== false
             ? (
-              <div className={styles.RequireHover}>
+              <div className={s.RequireHover}>
                 <PickableOnSvg />
               </div>
             )
             : (
-              <div className={styles.FadeInHover}>
+              <div className={s.FadeInHover}>
                 <PickableOffSvg />
               </div>
             )}
@@ -104,12 +105,12 @@ export function NodeView({
         >
           {node.object.visible
             ? (
-              <div className={styles.RequireHover}>
+              <div className={s.RequireHover}>
                 <VisibilityOnSvg />
               </div>
             )
             : (
-              <div className={styles.FadeInHover}>
+              <div className={s.FadeInHover}>
                 <VisibilityOffSvg />
               </div>
             )}

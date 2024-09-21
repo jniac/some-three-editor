@@ -1,0 +1,54 @@
+.EditorUI {
+  --font-size-large: 24px;
+  --font-size-regular: 14px;
+  --font-size-small: 11px;
+  --font-size-tiny: 8px;
+  
+  position: absolute;
+  inset: 0;
+  font-size: 14px;
+  color: #fff9;
+}
+
+.EditorUI * {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.Col {
+  display: flex;
+  flex-direction: column;
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+}
+
+.Abs {
+  position: absolute;
+}
+
+.Abs0 {
+  position: absolute;
+  inset: 0;
+}
+
+.TL {
+  top: 0;
+  left: 0;
+}
+
+
+.Thru {
+  pointer-events: none !important;
+}
+
+.Thru *:not(.Thru) {
+  pointer-events: auto;
+}
+
+.EditorUI input:focus {
+  outline: none;
+}
+

@@ -1,9 +1,0 @@
-
-.PanelBackground {
-  position: absolute;
-  inset: 0;
-  background-color: #fff4;
-  border-radius: .25em;
-  backdrop-filter: blur(32px);
-  border: 1px solid #fff3;
-}

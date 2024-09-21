@@ -11,7 +11,6 @@ import SelectSvg from '../../svg/pure/select.svg'
 import TranslateSvg from '../../svg/pure/translate.svg'
 import WorldSvg from '../../svg/pure/world.svg'
 
-import { PanelBackground } from '../panel'
 import styles from './styles.module.css'
 
 function SpaceButton() {
@@ -88,7 +87,6 @@ function ToolTypeSwitch() {
 export function Toolbar() {
   return (
     <div className={styles.Toolbar}>
-      <PanelBackground />
       <div className={styles.Wrapper}>
         <SpaceButton />
         <ToolTypeSwitch />

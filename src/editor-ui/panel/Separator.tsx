@@ -1,8 +1,10 @@
 'use client'
 
+import s from './panel.module.css'
+
 export function Separator() {
   return (
-    <div className='py-2'>
+    <div className={s.Separator}>
       <div
         style={{
           backgroundColor: '#fff3',

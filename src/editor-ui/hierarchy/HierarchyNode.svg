@@ -1,12 +1,12 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
   xmlns="http://www.w3.org/2000/svg">
   <g id="HierarchyNode">
-    <path id="closed" d="M20 12H16M24 12L22 12" stroke="black"/>
-    <path id="child" d="M20 24L20 16C20 13.7909 18.2091 12 16 12" stroke="black"/>
-    <path id="ending" d="M4 0V8C4 10.2091 5.79086 12 8 12V12" stroke="black"/>
-    <path id="parent" d="M4 0V12M4 24V12M8 12H4" stroke="black"/>
-    <path id="line" d="M4 0V24" stroke="black"/>
-    <circle id="circle" cx="12" cy="12" r="3.5" stroke="black"/>
-    <circle id="dot" cx="12" cy="12" r="2" fill="black"/>
+    <path id="closed" d="M20 12H16M24 12L22 12" stroke="currentColor"/>
+    <path id="child" d="M20 24L20 16C20 13.7909 18.2091 12 16 12" stroke="currentColor"/>
+    <path id="ending" d="M4 0V8C4 10.2091 5.79086 12 8 12V12" stroke="currentColor"/>
+    <path id="parent" d="M4 0V12M4 24V12M8 12H4" stroke="currentColor"/>
+    <path id="line" d="M4 0V24" stroke="currentColor"/>
+    <circle id="circle" cx="12" cy="12" r="3.5" stroke="currentColor"/>
+    <circle id="dot" cx="12" cy="12" r="2" fill="currentColor"/>
   </g>
 </svg>

@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import FoldDownSvg from '../../svg/pure/fold-down.svg'
 import FoldLeftSvg from '../../svg/pure/fold-left.svg'
 
-import styles from './foldable.module.css'
+import s from './foldable.module.css'
 
 export function Foldable({
   title = 'Fold Panel',
@@ -16,19 +16,16 @@ export function Foldable({
 }>) {
   const [open, setOpen] = useState(closedByDefault !== undefined ? !closedByDefault : true)
   return (
-    <div className={styles.Foldable}>
-      <div className='flex flex-row items-center pb-1'>
-        <div
-          className='flex flex-row items-center cursor-pointer'
-          onClick={() => setOpen(!open)}>
-          {open
-            ? <FoldDownSvg />
-            : <FoldLeftSvg />
-          }
-          <span>
-            {title}
-          </span>
-        </div>
+    <div className={s.Foldable}>
+      <div
+        onClick={() => setOpen(!open)}>
+        {open
+          ? <FoldDownSvg />
+          : <FoldLeftSvg />
+        }
+        <span>
+          {title}
+        </span>
       </div>
 
       {open && (

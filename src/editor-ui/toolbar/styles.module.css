@@ -6,9 +6,10 @@
   position: relative;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: .5em;
   
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
 }
 
 .ToolbarButton {
@@ -40,10 +41,10 @@
 }
 
 .Toggle:hover {
-  background-color: #0003;
+  background-color: #fff1;
 }
 
 .Toggle.active {
   color: white;
-  background-color: var(--font-color);
+  background-color: #fff1;
 }

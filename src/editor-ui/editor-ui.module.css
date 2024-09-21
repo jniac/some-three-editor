@@ -1,9 +1,0 @@
-.EditorUI {
-  position: absolute;
-  inset: 0;
-}
-
-.EditorUI * {
-  box-sizing: border-box;
-  position: relative;
-}

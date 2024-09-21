@@ -12,7 +12,7 @@ import { Foldable } from '../../atoms/foldable'
 import { AtomHandler, AtomType } from './atom'
 import { InputListeners, InputOptions, InputOptionsDeclaration, defaultInputOptions } from './types'
 
-import styles from './transform.module.css'
+import s from './transform.module.css'
 
 type Template = AtomType[]
 
@@ -50,7 +50,7 @@ function* handleInlineInput(
   inputListeners: Partial<InputListeners>
 ) {
   const mainLabelElement = document.createElement('div')
-  mainLabelElement.className = styles.MainLabel
+  mainLabelElement.className = s.MainLabel
   mainLabelElement.textContent = `• ${label}`
   container.appendChild(mainLabelElement)
 
@@ -111,7 +111,7 @@ function InlineInput<T extends object>(props: InlineInputProps<T>) {
   return (
     <div
       ref={ref}
-      className={styles.InlineInput}
+      className={s.InlineInput}
     />
   )
 }
@@ -166,8 +166,8 @@ function TransformInspector({
   }
 
   return (
-    <div className={styles.TransformPanel}>
-      <div className='flex flex-col gap-[.125em]'>
+    <div className={s.TransformPanel}>
+      <div className={s.Lines}>
         <InlineInput
           label='Position'
           value={objects.map(object => object.position)}
