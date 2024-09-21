@@ -53,7 +53,7 @@ export function Layout(props: Partial<{
   const editor = useEditor()
 
   const { ref } = useEffects<HTMLDivElement>(function* (div) {
-    const spacing = 8
+    const spacing = 6
 
     const root = new Space(Direction.Vertical)
       .setPadding(spacing)

@@ -18,7 +18,7 @@ import { Panel } from './panel'
 import { SelectionPanel } from './selection'
 import { Toolbar } from './toolbar'
 
-import { ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
 import { useEffects } from 'some-utils-react/hooks/effects'
@@ -73,19 +73,33 @@ function CameraPanel() {
   )
 }
 
-export function EditorUI({ children }: { children?: ReactNode }) {
+const defaultProps = {
+  backgroundColor: '#0006',
+}
+
+type Props = Partial<typeof defaultProps> & { children?: ReactNode }
+
+export function EditorUI(props: Props) {
+  const {
+    children,
+    backgroundColor,
+  } = { ...defaultProps, ...props }
   const editor = useEditor()
 
   useEffects(function* () {
     yield handleKeyboard([
       [{ code: 'Space', modifiers: 'shift' }, () => {
         editor.uiVisibility.set(!editor.uiVisibility.value)
-      }]
+      }],
     ])
   }, [])
 
+  const style = {
+    '--background-color': backgroundColor,
+  } as CSSProperties
+
   return (
-    <div className={mc(ms.EditorUI, ms.Abs0, ms.Thru)}>
+    <div className={mc(ms.EditorUI, ms.Abs0, ms.Thru)} style={style}>
       <Layout
         topBar={<Toolbar />}
         leftCol={
@@ -108,3 +122,5 @@ export function EditorUI({ children }: { children?: ReactNode }) {
     </div>
   )
 }
+
+export type { Props as EditorUIProps }

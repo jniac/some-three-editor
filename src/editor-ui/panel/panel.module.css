@@ -6,8 +6,9 @@
 }
 
 .PanelBackground {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
   backdrop-filter: blur(32px) brightness(0.75) saturate(1);
+  /* backdrop-filter: blur(32px) brightness(.9) saturate(.9); */
   pointer-events: none;
 }
 

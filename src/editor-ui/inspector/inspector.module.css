@@ -75,6 +75,8 @@
 
 .SmallButton {
   font-size: var(--font-size-tiny);
+  overflow: hidden;
+  white-space: nowrap;
   padding: 0em .5em;
   border-radius: .15em;
   border: solid 1px #fff6;

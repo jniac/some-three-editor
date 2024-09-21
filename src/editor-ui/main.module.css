@@ -3,6 +3,10 @@
   --font-size-regular: 14px;
   --font-size-small: 11px;
   --font-size-tiny: 8px;
+
+  -webkit-font-smoothing: antialiased;
+
+  letter-spacing: .02em;
   
   position: absolute;
   inset: 0;
@@ -44,7 +48,7 @@
   pointer-events: none !important;
 }
 
-.Thru *:not(.Thru) {
+.Thru > *:not(.Thru) {
   pointer-events: auto;
 }
 

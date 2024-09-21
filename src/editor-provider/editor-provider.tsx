@@ -1,17 +1,13 @@
-import React, { createContext, ReactNode, useContext, useEffect, useMemo } from 'react'
+import { createContext, useContext, useEffect, useMemo } from 'react'
 
+import { useEffects, UseEffectsReturnable } from 'some-utils-react/hooks/effects'
 import { useTriggerRender } from 'some-utils-react/hooks/render'
 import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
 
-import { useEffects, UseEffectsReturnable } from 'some-utils-react/hooks/effects'
 import { EditorContext } from '../editor-context/editor'
+import { EditorUI, EditorUIProps } from '../editor-ui'
 
 const context = createContext<EditorContext>(null!)
-
-type Props = {
-  three: ThreeWebglContext
-  children?: ReactNode
-}
 
 export function useEditor(
   effects?: (editor: EditorContext) => UseEffectsReturnable,
@@ -43,12 +39,16 @@ export function useEditorRenderOnRefresh() {
   }, [])
 }
 
+type Props = EditorUIProps & {
+  three: ThreeWebglContext
+}
+
 export function EditorProvider(props: Props) {
-  const { three, children } = props
+  const { three, ...rest } = props
   const editor = useMemo(() => new EditorContext(three), [])
   return (
     <context.Provider value={editor}>
-      {children}
+      <EditorUI {...rest} />
     </context.Provider>
   )
 }

@@ -159,7 +159,8 @@ function Inner() {
               }}
 
               onPickableClick={() => {
-                const pickable = !node.object.userData.pickable
+                let { pickable = true } = node.object.userData
+                pickable = !pickable
                 const objects = getObjects(node)
 
                 editor.history.push({

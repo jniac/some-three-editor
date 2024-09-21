@@ -32,7 +32,7 @@
 .Lines {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .InlineInput {
@@ -75,7 +75,7 @@
 }
 
 .AtomicInput > label.draggable:hover {
-  background-color: #fff3;
+  background-color: #fff1;
 }
 
 .AtomicInput > div {
@@ -85,7 +85,7 @@
 .AtomicInput > div > * {
   width: 100%;
   height: 100%;
-  background-color: #fff3;
+  background-color: #fff1;
   border-radius: .15em;
   border: 1px solid transparent;
 }
@@ -99,17 +99,17 @@
 }
 
 .AtomicInput:hover > div > * {
-  background-color: #fff5;
-  border-color: #fff6;
+  background-color: #fff4;
+  border-color: #fff4;
 }
 
 .AtomicInput.focus > div > * {
-  background-color: #fff8;
-  border-color: #fffa;
+  background-color: #fff4;
+  border-color: #fff6;
 }
 
 .AtomicInput.dragging > label.draggable {
-  background-color: #fff8;
+  background-color: #fff4;
 }
 
 .AtomicInput.multiple:not(.focus) > div::before {
