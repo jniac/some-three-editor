@@ -2,7 +2,7 @@ import { BufferGeometry } from 'three'
 
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
-import { Foldable } from '../atoms/foldable'
+import { Foldable } from '../components/foldable'
 import { Separator } from '../panel/Separator'
 import { Title } from './title'
 import { TransformPanel } from './transform/transform'
@@ -62,6 +62,23 @@ function AutoPanel() {
   )
 }
 
+function Slider() {
+  return (
+    <input type='range' />
+  )
+}
+
+function UserDataPanel() {
+  return (
+    <Foldable
+      title='User Data'
+      content={() => (
+        null
+      )}
+    />
+  )
+}
+
 export function Inspector() {
   return (
     <>
@@ -69,6 +86,8 @@ export function Inspector() {
       <Separator />
       <TransformPanel />
       <AutoPanel />
+      <Separator />
+      <UserDataPanel />
     </>
   )
 }

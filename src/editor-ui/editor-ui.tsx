@@ -8,7 +8,7 @@ import { useEditor, useEditorRenderOnRefresh } from '../editor-provider'
 
 import { InfoSvg } from '../svg/InfoSvg'
 
-import { Foldable } from './atoms/foldable'
+import { Foldable } from './components/foldable'
 import { HierachyPanel } from './hierarchy'
 import { HistoryPanel } from './history'
 import { Inspector } from './inspector'

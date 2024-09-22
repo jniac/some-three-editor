@@ -2,7 +2,7 @@ import { Object3D } from 'three'
 
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
-import { Foldable } from '../atoms/foldable'
+import { Foldable } from '../components/foldable'
 
 import styles from './selection.module.css'
 

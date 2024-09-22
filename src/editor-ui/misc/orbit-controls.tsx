@@ -1,4 +1,4 @@
-import { Foldable } from '../atoms/foldable'
+import { Foldable } from '../components/foldable'
 
 import styles from './orbit-controls.module.css'
 

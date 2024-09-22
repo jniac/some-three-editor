@@ -5,8 +5,8 @@ import { useTriggerRender } from 'some-utils-react/hooks/render'
 
 import { useEditor } from '../../editor-provider'
 
-import { Foldable } from '../atoms/foldable'
 import { SmallButton } from '../buttons'
+import { Foldable } from '../components/foldable'
 
 import { HierarchySelectionHighlight } from './HierarchySelectionHighlight'
 import { NodeInfo } from './NodeInfo'

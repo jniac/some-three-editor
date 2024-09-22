@@ -1,44 +1,19 @@
 
 import { evaluate } from 'mathjs'
 import { useRef } from 'react'
-import { Euler, Object3D } from 'three'
+import { Object3D } from 'three'
 
 import { useEffects } from 'some-utils-react/hooks/effects'
 
 import { EditorContext, TransformAction } from '../../../editor-context'
 import { useEditor, useEditorRenderOnRefresh } from '../../../editor-provider'
-import { Foldable } from '../../atoms/foldable'
+import { Foldable } from '../../components/foldable'
 
-import { AtomHandler, AtomType } from './atom'
-import { InputListeners, InputOptions, InputOptionsDeclaration, defaultInputOptions } from './types'
+import { AtomHandler } from '../atoms/atom'
+import { defaultInputOptions, InputListeners, InputOptions, InputOptionsDeclaration } from './types'
 
+import { getTemplate, Template } from '../atoms/template'
 import s from './transform.module.css'
-
-type Template = AtomType[]
-
-const templates = new Map<any, Template>()
-
-templates.set(Euler, [
-  ['x', 'number'],
-  ['y', 'number'],
-  ['z', 'number'],
-  ['order', ['XYZ', 'XZY', 'YXZ', 'YZX', 'ZXY', 'ZYX'], { key: 'or.', flex: '0 0 5.8em' }],
-])
-
-function getTemplate(object: any) {
-  const existing = templates.get(object.constructor)
-  if (existing) {
-    return existing
-  }
-  const template = [] as Template
-  for (const key in object) {
-    const type = typeof object[key]
-    if (type === 'number' || type === 'string') {
-      template.push([key, type])
-    }
-  }
-  return template
-}
 
 function* handleInlineInput(
   label: string,

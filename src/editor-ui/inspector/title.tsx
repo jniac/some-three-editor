@@ -6,7 +6,7 @@ import { useObservableValue } from 'some-utils-react/hooks/observables'
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
 import { StateButtons } from '../StateButtons'
-import { SpanName } from '../atoms/name'
+import { SpanName } from '../components/name'
 import { Separator } from '../panel/Separator'
 
 import styles from './inspector.module.css'

@@ -46,6 +46,12 @@ type Props = EditorUIProps & {
 export function EditorProvider(props: Props) {
   const { three, ...rest } = props
   const editor = useMemo(() => new EditorContext(three), [])
+  useEffects(function* () {
+    // Refresh the editor when the three context is likely to have changed.
+    yield three.onAfterLoad(() => {
+      editor.requestRefresh()
+    })
+  }, [])
   return (
     <context.Provider value={editor}>
       <EditorUI {...rest} />

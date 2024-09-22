@@ -6,7 +6,7 @@ import { makeClassName } from 'some-utils-react/utils/classname'
 import { Command } from '../../editor-context'
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
-import { Foldable } from '../atoms/foldable'
+import { Foldable } from '../components/foldable'
 
 // SVGs
 import RedoSvg from '../../svg/pure/history-redo.svg'

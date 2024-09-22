@@ -2,7 +2,7 @@ import { handlePointer } from 'some-utils-dom/handle/pointer'
 
 import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
 import { formatNumber } from 'some-utils-ts/string/number'
-import { InputListeners, InputOptions } from './types'
+import { InputListeners, InputOptions } from '../transform/types'
 
 import styles from './transform.module.css'
 
