@@ -51,3 +51,16 @@ export function toggleVisibility(editor: EditorContext) {
     editor.history.push(command)
   }
 }
+
+/**
+ * NOTE: hierarchy deploy is not pushed to history.
+ */
+export function hierarchyDeployAll(editor: EditorContext, scope: Object3D) {
+  const queue = [scope]
+  while (queue.length > 0) {
+    const current = queue.shift()!
+    editor.metadata.get(current).set('hierarchyOpen', true)
+    console.log(current)
+    queue.push(...current.children)
+  }
+}
