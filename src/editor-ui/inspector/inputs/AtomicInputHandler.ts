@@ -11,7 +11,7 @@ import { AtomicInputType, InputListeners, InputOptions } from './types'
 import s from './inputs.module.css'
 
 // CSS for the slider gradient:
-// console.log(createGradientStops('#fffc', '#fff0', { easing: 'out3', subdivisions: 5 }).join(', '))
+// console.log(createGradientStops('#fff8', '#fff0', { easing: 'out3', subdivisions: 7 }).join(', '))
 
 export class AtomicInputHandler {
   private static nextId = 0

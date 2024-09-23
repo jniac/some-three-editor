@@ -201,7 +201,7 @@
   top: 0;
   width: 2em;
   height: 100%;
-  --linear-gradient-stops: #ffffffcc, #ffffff76, #ffffff3c, #ffffff19, #ffffff07, #ffffff00, #ffffff00;
+  --linear-gradient-stops: #ffffff88, #ffffff5b, #ffffff39, #ffffff21, #ffffff11, #ffffff07, #ffffff02, #ffffff00, #ffffff00;
 }
 
 .AtomicInput .Slider .OvershootLowerBar.hidden,
