@@ -2,12 +2,12 @@
 import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
 import { handlePointer } from 'some-utils-dom/handle/pointer'
 import { clamp01 } from 'some-utils-ts/math/basic'
-import { createGradientStops } from 'some-utils-ts/sometime-useful/gradient-stops'
 import { formatNumber } from 'some-utils-ts/string/number'
 
 import { AtomicInputType, InputListeners, InputOptions } from './types'
 
-console.log(createGradientStops('#fffc', '#fff0', { easing: 'out3', subdivisions: 5 }).join(', '))
+// CSS for the slider gradient:
+// console.log(createGradientStops('#fffc', '#fff0', { easing: 'out3', subdivisions: 5 }).join(', '))
 
 import s from './inputs.module.css'
 

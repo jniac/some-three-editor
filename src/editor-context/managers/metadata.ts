@@ -10,7 +10,8 @@ type Setter<T> = {
 export class MetadataObject implements Readonly<Metadata> {
   private changeObs: ObservableNumber
 
-  readonly scope = Scope.Public
+  /** NOTE: `scope` isn't used for now. Should we keep it? */
+  readonly scope: Scope = Scope.Public
   readonly hierarchyVisibility = Visibility.Visible
   readonly hierarchyOpen = false
   readonly sceneVisibility = Visibility.Visible

@@ -76,7 +76,7 @@ function UserDataPanel() {
   useEffects(function* () {
     const obs = new Observable(dummy.transition)
     obs.onChange(value => console.log(`transition: ${value}`))
-    yield onTick({ timeInterval: 1 / 12 }, () => {
+    yield onTick('three', { timeInterval: 1 / 12 }, () => {
       obs.value = dummy.transition
     })
   }, [])
