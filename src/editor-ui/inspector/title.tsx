@@ -3,13 +3,32 @@ import { Object3D } from 'three'
 
 import { useObservableValue } from 'some-utils-react/hooks/observables'
 
+import { toggleVisibility } from '../../editor-context/actions'
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
 import { StateButtons } from '../StateButtons'
 import { SpanName } from '../components/name'
 import { Separator } from '../panel/Separator'
 
+
 import styles from './inspector.module.css'
+
+function getConstructorNames(object: any) {
+  const names = []
+  let current = Object.getPrototypeOf(object)
+  while (current) {
+    if (Object.hasOwn(current, 'displayName')) {
+      names.push(current.displayName)
+    } else {
+      names.push(current.constructor.name)
+    }
+    if (current === Object3D.prototype) {
+      break
+    }
+    current = Object.getPrototypeOf(current)
+  }
+  return names
+}
 
 function Parent({ parent }: { parent: Object3D }) {
   const editor = useEditor()
@@ -68,6 +87,7 @@ function TitleSingle({
 }: {
   object: Object3D
 }) {
+  const editor = useEditor()
   useEditorRenderOnRefresh()
 
   if (!object) {
@@ -77,6 +97,8 @@ function TitleSingle({
   }
 
   const { name } = object
+  const constructorNames = getConstructorNames(object)
+  const [constructorName] = constructorNames
   return (
     <div className={styles.TitleSingle}>
       {object.parent?.parent && (
@@ -90,7 +112,7 @@ function TitleSingle({
       >
         {name
           ? <span>{name}</span>
-          : <span style={{ fontStyle: 'italic' }}>{(object.constructor as any)['displayName'] ?? object.constructor.name}</span>
+          : <span style={{ fontStyle: 'italic' }}>{constructorName}</span>
         }
 
         <div
@@ -104,9 +126,14 @@ function TitleSingle({
         >
           <StateButtons
             visible={object.visible}
+            onVisibilityClick={() => toggleVisibility(editor)}
           />
         </div>
       </h1>
+
+      <div className={styles.ConstructorNames}>
+        {`(${constructorNames.join(' → ')})`}
+      </div>
 
       <div className={styles.UUID}>
         {object.uuid}

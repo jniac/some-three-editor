@@ -28,7 +28,7 @@ export type Metadata = {
   selectable: boolean
 }
 
-export type CommandArg = {
+export type Command = {
   comment?: string
   execute(): void
   undo(): void

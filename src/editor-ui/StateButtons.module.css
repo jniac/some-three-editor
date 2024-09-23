@@ -7,3 +7,11 @@
   flex-direction: row;
   align-items: center;
 }
+
+.StateButtons > *:hover {
+  color: #fffc;
+}
+
+.StateButtons > * {
+  cursor: pointer;
+}

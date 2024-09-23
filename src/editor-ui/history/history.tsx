@@ -3,7 +3,7 @@ import { HTMLProps } from 'react'
 
 import { makeClassName } from 'some-utils-react/utils/classname'
 
-import { Command } from '../../editor-context'
+import { CommandItem } from '../../editor-context'
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 
 import { Foldable } from '../components/foldable'
@@ -22,7 +22,7 @@ function reverseMap<T1, T2>(values: T1[], fn: (value: T1, index: number) => T2):
   return result
 }
 
-function CommandEntry(props: HTMLProps<HTMLDivElement> & { commandType: 'undo' | 'redo', command: Command }) {
+function CommandEntry(props: HTMLProps<HTMLDivElement> & { commandType: 'undo' | 'redo', command: CommandItem }) {
   const {
     commandType,
     command,

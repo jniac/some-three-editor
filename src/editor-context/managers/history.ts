@@ -1,17 +1,17 @@
 import { ObservableNumber } from 'some-utils-ts/observables'
 
-import { CommandArg } from '../types'
+import { Command } from '../types'
 
-export class Command {
+export class CommandItem {
   private static nextId = 0
-  readonly id = Command.nextId++
+  readonly id = CommandItem.nextId++
   readonly historyIndex: number
 
   readonly comment: string
   readonly execute: () => void
   readonly undo: () => void
 
-  constructor(historyIndex: number, arg: CommandArg) {
+  constructor(historyIndex: number, arg: Command) {
     this.historyIndex = historyIndex
     this.comment = arg.comment ?? `Command ${this.id}`
     this.execute = arg.execute
@@ -22,8 +22,8 @@ export class Command {
 export class HistoryManager {
   private changeObs = new ObservableNumber(0)
 
-  undoStack: Command[] = []
-  redoStack: Command[] = []
+  undoStack: CommandItem[] = []
+  redoStack: CommandItem[] = []
 
   get lastHistoryIndex(): number {
     return this.undoStack.length > 0
@@ -36,8 +36,8 @@ export class HistoryManager {
   get canUndo(): boolean { return this.undoStack.length > 0 }
   get canRedo(): boolean { return this.redoStack.length > 0 }
 
-  push(arg: CommandArg): void {
-    const command = new Command(this.lastHistoryIndex + 1, arg)
+  push(arg: Command): void {
+    const command = new CommandItem(this.lastHistoryIndex + 1, arg)
     command.execute()
 
     this.undoStack.push(command)

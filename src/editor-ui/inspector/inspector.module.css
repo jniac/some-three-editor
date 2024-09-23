@@ -6,6 +6,7 @@
 .UUID {
   font-size: var(--font-size-tiny);
   font-family: 'Fira Code', monospace;
+  padding-top: 3px;
 }
 
 .TitleSingle {
@@ -61,6 +62,12 @@
   margin-top: .5em;
   background-color: #fff3;
   border-radius: .15em;
+}
+
+.ConstructorNames {
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Geometry {

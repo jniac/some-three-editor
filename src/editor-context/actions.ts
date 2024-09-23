@@ -1,6 +1,7 @@
 import { Object3D } from 'three'
 
 import { EditorContext } from './editor'
+import { Command } from './types'
 
 export function selectParents(editor: EditorContext) {
   const objects = new Set<Object3D>()
@@ -27,4 +28,26 @@ export function selectChildren(editor: EditorContext) {
   }
 
   editor.sceneSelection.set('Select Children', objects)
+}
+
+export function toggleVisibility(editor: EditorContext) {
+  const objects = [...editor.sceneSelection.objects]
+  if (objects.length > 0) {
+    const newVisibility = !objects[0].visible
+    const concerned = objects.filter(object => object.visible !== newVisibility)
+    const command: Command = {
+      comment: newVisibility ? 'Show' : 'Hide',
+      execute: () => {
+        for (const object of concerned) {
+          object.visible = newVisibility
+        }
+      },
+      undo: () => {
+        for (const object of concerned) {
+          object.visible = !newVisibility
+        }
+      },
+    }
+    editor.history.push(command)
+  }
 }
