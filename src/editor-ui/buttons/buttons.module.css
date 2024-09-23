@@ -2,7 +2,7 @@
   font-size: .66em;
   background: #fff9;
   padding: .25em .5em;
-  border-radius: .25em;
+  border-radius: 2px;
 }
 
 .SmallButton.outlined {

@@ -82,8 +82,8 @@
   overflow: hidden;
   white-space: nowrap;
   padding: 0em .5em;
-  border-radius: .15em;
-  border: solid 1px #fff6;
+  border-radius: 2Px;
+  border: solid 1px #fff2;
   background-color: #fff3;
   cursor: pointer;
   display: flex;
