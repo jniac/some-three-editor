@@ -4,12 +4,14 @@ import { handlePointer } from 'some-utils-dom/handle/pointer'
 import { clamp01 } from 'some-utils-ts/math/basic'
 import { formatNumber } from 'some-utils-ts/string/number'
 
+import { InputMetadata } from './metadata'
+import { sliderNormalize, SliderProps, sliderUnnormalize } from './slider'
 import { AtomicInputType, InputListeners, InputOptions } from './types'
+
+import s from './inputs.module.css'
 
 // CSS for the slider gradient:
 // console.log(createGradientStops('#fffc', '#fff0', { easing: 'out3', subdivisions: 5 }).join(', '))
-
-import s from './inputs.module.css'
 
 export class AtomicInputHandler {
   private static nextId = 0
@@ -18,6 +20,7 @@ export class AtomicInputHandler {
 
   atomNamespace: string
   atomType: AtomicInputType
+  inputMetadata: InputMetadata
   inputOptions: InputOptions
   inputListeners: Partial<InputListeners>
 
@@ -32,9 +35,16 @@ export class AtomicInputHandler {
 
   onExternalUpdate = () => { }
 
-  constructor(atomNamespace: string, atomType: AtomicInputType, inputOptions: InputOptions, inputListeners: Partial<InputListeners> = {}) {
+  constructor(
+    atomNamespace: string,
+    atomType: AtomicInputType,
+    inputMetadata: InputMetadata,
+    inputOptions: InputOptions,
+    inputListeners: Partial<InputListeners> = {},
+  ) {
     this.atomNamespace = atomNamespace
     this.atomType = atomType
+    this.inputMetadata = inputMetadata
     this.inputOptions = inputOptions
     this.inputListeners = inputListeners
 
@@ -183,17 +193,19 @@ export class AtomicInputHandler {
     sliderDiv.appendChild(overshootLowerBar)
     overshootLowerBar.className = `${s.OvershootLowerBar} ${s.hidden}`
 
-    function updateSliderDivs(sliderValue: number) {
-      progressBar.style.width = `${clamp01(sliderValue) * 100}%`
-      thinBar.style.left = `calc(${sliderValue} * (100% - 2px))`
-      overshootLowerBar.classList.toggle(s.hidden, sliderValue >= 0)
-      overshootUpperBar.classList.toggle(s.hidden, sliderValue <= 1)
+    const updateSliderDivs = (sliderValue: number) => {
+      const value = sliderNormalize(sliderValue, this.inputMetadata.props as SliderProps)
+      progressBar.style.width = `${clamp01(value) * 100}%`
+      thinBar.style.left = `calc(${value} * (100% - 2px))`
+      overshootLowerBar.classList.toggle(s.hidden, value >= 0)
+      overshootUpperBar.classList.toggle(s.hidden, value <= 1)
     }
 
     slider.oninput = () => {
-      const sliderValue = Number.parseFloat(slider.value)
-      updateSliderDivs(sliderValue)
-      this.inputListeners.onInput?.(this.atomType[0], slider.value)
+      const rawValue = Number.parseFloat(slider.value)
+      const value = sliderUnnormalize(rawValue, this.inputMetadata.props as SliderProps)
+      updateSliderDivs(value)
+      this.inputListeners.onInput?.(this.atomType[0], value.toString())
     }
 
     slider.onfocus = () => this.focus()

@@ -6,9 +6,9 @@ import { EditorContext } from '../../../editor-context'
 import { useEditor } from '../../../editor-provider'
 
 import { AtomicInputHandler } from './AtomicInputHandler'
-import { AtomicInputType, defaultInputOptions, InputListeners, InputOptions, InputOptionsDeclaration } from './types'
-
+import { InputMetadata, InputMode } from './metadata'
 import { getTemplate, Template } from './template'
+import { AtomicInputType, defaultInputOptions, InputListeners, InputOptions, InputOptionsDeclaration } from './types'
 
 import s from './inputs.module.css'
 
@@ -18,6 +18,7 @@ function* handleInlineInput(
   template: Template,
   editor: EditorContext,
   container: HTMLDivElement,
+  inputMetadata: InputMetadata,
   inputOptions: InputOptions,
   inputListeners: Partial<InputListeners>
 ) {
@@ -29,29 +30,27 @@ function* handleInlineInput(
   const wrapper = document.createElement('div')
   container.appendChild(wrapper)
 
-  // const inputs = template
-  //   .map(atomType => new AtomicInputHandler(label, atomType, inputOptions, inputListeners))
-  const inputs: AtomicInputHandler[] = []
+  const atomicInputs: AtomicInputHandler[] = []
+
   for (const atomType of template) {
-    const input = new AtomicInputHandler(mainLabel, atomType, inputOptions, inputListeners)
-    inputs.push(input)
+    const input = new AtomicInputHandler(mainLabel, atomType, inputMetadata, inputOptions, inputListeners)
+    atomicInputs.push(input)
 
     // Add an extra input for sliders:
     if (atomType[1] === 'slider') {
       const [label, _, options] = atomType
       const extraAtomType = [label, 'number', { ...options, flex: '.3' }] as AtomicInputType
-      const extraInput = new AtomicInputHandler(label, extraAtomType, inputOptions, inputListeners)
-      inputs.push(extraInput)
+      const extraInput = new AtomicInputHandler(label, extraAtomType, inputMetadata, inputOptions, inputListeners)
+      atomicInputs.push(extraInput)
     }
   }
 
-
-  for (const input of inputs) {
+  for (const input of atomicInputs) {
     wrapper.appendChild(input.div)
   }
 
   const update = () => {
-    for (const atom of inputs) {
+    for (const atom of atomicInputs) {
       atom.update(values)
     }
   }
@@ -65,7 +64,8 @@ function* handleInlineInput(
 
 type InlineInputProps<T> = Partial<InputListeners & {
   label: string
-  mode: 'regular' | 'slider' // Probably not the good name...
+  metadata: InputMetadata
+  mode: InputMode // Probably not the good name...
   template: Template
   options: InputOptionsDeclaration
   value: (() => Generator<T>) | T[]
@@ -74,7 +74,7 @@ type InlineInputProps<T> = Partial<InputListeners & {
 export function InlineInput<T extends object>(props: InlineInputProps<T>) {
   const {
     label: mainLabel = '...',
-    mode = 'regular',
+    metadata = { mode: null, props: {} },
     template: templateArg,
     options,
     value,
@@ -87,8 +87,8 @@ export function InlineInput<T extends object>(props: InlineInputProps<T>) {
   const editor = useEditor()
 
   const { ref } = useEffects<HTMLDivElement>(function* (div) {
-    switch (mode) {
-      case 'regular': {
+    switch (metadata.mode) {
+      case null: {
         const template = templateArg ?? getTemplate(values[0])
         yield* handleInlineInput(
           mainLabel,
@@ -96,6 +96,7 @@ export function InlineInput<T extends object>(props: InlineInputProps<T>) {
           template,
           editor,
           div,
+          metadata,
           { ...defaultInputOptions, ...options },
           inputListeners
         )
@@ -110,6 +111,7 @@ export function InlineInput<T extends object>(props: InlineInputProps<T>) {
           [[mainLabel, 'slider', { key: null }]],
           editor,
           div,
+          metadata,
           { ...defaultInputOptions, ...options },
           inputListeners
         )
@@ -117,7 +119,7 @@ export function InlineInput<T extends object>(props: InlineInputProps<T>) {
       }
 
       default: {
-        throw new Error(`Unknown mode: ${mode}`)
+        throw new Error(`Unknown mode: ${metadata.mode}`)
       }
     }
   }, 'always')

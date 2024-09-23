@@ -1,21 +1,16 @@
-import '@fontsource/fira-code'
-import '@fontsource/inter'
-import { useMemo } from 'react'
-import { BufferGeometry, Vector3 } from 'three'
-
-import { useEffects } from 'some-utils-react/hooks/effects'
-import { Observable } from 'some-utils-ts/observables'
-import { onTick } from 'some-utils-ts/ticker'
+import { BufferGeometry } from 'three'
 
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 import { Foldable } from '../components/foldable'
 import { Separator } from '../panel/Separator'
 
 import { InlineInput } from './inputs/inline-input'
+import { defaultMetadata, InputMetadata, parseInputMetadata } from './inputs/metadata'
 import { Title } from './title'
 import { TransformPanel } from './transform/transform'
 
 import styles from './inspector.module.css'
+
 
 function GeometryPanel({ geometry }: { geometry: BufferGeometry }) {
   return (
@@ -59,7 +54,17 @@ function AutoPanel() {
   if (object) {
     if ('geometry' in (object as any)) {
       children.push(<Separator key={children.length} />)
-      children.push(<GeometryPanel key={children.length} geometry={(object as any).geometry} />)
+      children.push(<GeometryPanel key='geometry' geometry={(object as any).geometry} />)
+    }
+  }
+
+  if (object && objects.length === 1) {
+    if ('userData' in object) {
+      const keys = Object.keys(object.userData)
+      if (keys.length > 0) {
+        children.push(<Separator key={children.length} />)
+        children.push(<UserDataPanel key='userData' userData={object.userData} />)
+      }
     }
   }
 
@@ -70,34 +75,70 @@ function AutoPanel() {
   )
 }
 
-function UserDataPanel() {
-  // TODO: Implement custom properties inspection!
-  const dummy = useMemo(() => ({ transition: 0 }), [])
-  useEffects(function* () {
-    const obs = new Observable(dummy.transition)
-    obs.onChange(value => console.log(`transition: ${value}`))
-    yield onTick('three', { timeInterval: 1 / 12 }, () => {
-      obs.value = dummy.transition
-    })
-  }, [])
+/**
+ * Basic heuristic to extract user data properties from an plain object.
+ * 
+ * Implementations that must follow:
+ * - Class properties with their static metadata counterpart.
+ * - ...?
+ */
+function extractUserDataProperties(userData: any) {
+  const properties: { key: string, value: any, meta: InputMetadata }[] = []
+
+  function assignOrCreate(key: string) {
+    const property = properties.find(p => p.key === key)
+    if (property) {
+      return property
+    } else {
+      const property = { key, value: undefined, meta: defaultMetadata }
+      properties.push(property)
+      return property
+    }
+  }
+
+  const keys = Object.keys(userData)
+  for (const key of keys) {
+    // Metadata entry:
+    if (key.endsWith('_meta')) {
+      const originalKey = key.slice(0, -5)
+      const property = assignOrCreate(originalKey)
+      property.meta = parseInputMetadata(userData[key])
+    }
+
+    // Value entry:
+    else {
+      const property = assignOrCreate(key)
+      property.value = userData[key]
+    }
+  }
+
+  return properties
+}
+
+function UserDataPanel({ userData }: { userData: any }) {
+  function Content() {
+    return (
+      <>
+        {extractUserDataProperties(userData).map(prop => (
+          <InlineInput
+            key={prop.key}
+            label={prop.key}
+            value={[userData]}
+            metadata={prop.meta}
+            template={[[prop.key, 'number', { key: null }]]}
+            onInput={(key, value) => {
+              userData[prop.key] = Number.parseFloat(value)
+            }}
+          />
+        ))}
+      </>
+    )
+  }
 
   return (
     <Foldable
       title='User Data'
-      content={() => (
-        <>
-          <InlineInput
-            label='position'
-            value={[new Vector3(1, 2, 3)]}
-          />
-          <InlineInput
-            label='transition'
-            mode='slider'
-            onInput={(_, value) => dummy.transition = Number.parseFloat(value)}
-            value={[dummy]}
-          />
-        </>
-      )}
+      content={Content}
     />
   )
 }
@@ -109,8 +150,6 @@ export function Inspector() {
       <Separator />
       <TransformPanel />
       <AutoPanel />
-      <Separator />
-      <UserDataPanel />
     </>
   )
 }

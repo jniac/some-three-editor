@@ -1,11 +1,12 @@
 
 
-
 export const defaultInputOptions = {
   step: 1,
   stepSmall: .1,
   stepLarge: 10,
   dragRatio: .1,
+  min: -Infinity,
+  max: Infinity,
 }
 
 export type InputOptions = typeof defaultInputOptions
@@ -35,7 +36,6 @@ export type AtomicInputType = [
 
   type:
   | 'number'
-  | 'slider'
   | 'string'
   | string[], // enums
 

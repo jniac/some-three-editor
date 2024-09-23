@@ -1,5 +1,7 @@
 'use client'
 
+import '@fontsource/fira-code'
+import '@fontsource/inter'
 import { CSSProperties, ReactNode } from 'react'
 import { Camera } from 'three'
 

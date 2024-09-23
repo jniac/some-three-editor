@@ -153,6 +153,11 @@
   opacity: 0;
 }
 
+.AtomicInput.focus > div > * {
+  background-color: #fff3;
+}
+
+
 .AtomicInput .Slider .ProgressBar {
   position: absolute;
   inset: 0;

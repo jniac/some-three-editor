@@ -186,7 +186,7 @@ export function Layout(props: Partial<{
         <div
           className={mc('viewport-frame', ms.Abs0, ms.Thru)}
           style={{
-            border: '1px solid #fff3',
+            border: '1px solid #fff6',
             borderRadius: '6px',
           }}
         />
