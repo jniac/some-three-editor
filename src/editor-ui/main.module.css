@@ -4,9 +4,9 @@
   --font-size-small: 11px;
   --font-size-tiny: 8px;
 
-  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter';
 
-  letter-spacing: .02em;
+  -webkit-font-smoothing: antialiased;
   
   position: absolute;
   inset: 0;

@@ -38,6 +38,8 @@
     "src"
   ],
   "dependencies": {
+    "@fontsource/fira-code": "^5.1.0",
+    "@fontsource/inter": "^5.1.0",
     "mathjs": "^13.1.1"
   }
 }

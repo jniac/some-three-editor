@@ -1,24 +1,23 @@
-import { handlePointer } from 'some-utils-dom/handle/pointer'
 
 import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
+import { handlePointer } from 'some-utils-dom/handle/pointer'
+import { clamp01 } from 'some-utils-ts/math/basic'
+import { createGradientStops } from 'some-utils-ts/sometime-useful/gradient-stops'
 import { formatNumber } from 'some-utils-ts/string/number'
-import { InputListeners, InputOptions } from '../transform/types'
 
-import styles from './transform.module.css'
+import { AtomicInputType, InputListeners, InputOptions } from './types'
 
-export type AtomType = [
-  key: string,
-  type: 'number' | 'string' | string[],
-  options?: Partial<{ flex: string, key: string | null }>
-]
+console.log(createGradientStops('#fffc', '#fff0', { easing: 'out3', subdivisions: 5 }).join(', '))
 
-export class AtomHandler {
+import s from './inputs.module.css'
+
+export class AtomicInputHandler {
   private static nextId = 0
 
-  id = AtomHandler.nextId++
+  id = AtomicInputHandler.nextId++
 
   atomNamespace: string
-  atomType: AtomType
+  atomType: AtomicInputType
   inputOptions: InputOptions
   inputListeners: Partial<InputListeners>
 
@@ -31,7 +30,9 @@ export class AtomHandler {
   isMultiple = false
   focused = false
 
-  constructor(atomNamespace: string, atomType: AtomType, inputOptions: InputOptions, inputListeners: Partial<InputListeners> = {}) {
+  onExternalUpdate = () => { }
+
+  constructor(atomNamespace: string, atomType: AtomicInputType, inputOptions: InputOptions, inputListeners: Partial<InputListeners> = {}) {
     this.atomNamespace = atomNamespace
     this.atomType = atomType
     this.inputOptions = inputOptions
@@ -41,7 +42,7 @@ export class AtomHandler {
     const labelString = (options && 'key' in options) ? options.key : key
 
     const div = document.createElement('div')
-    div.className = styles.AtomicInput
+    div.className = s.AtomicInput
     div.style.flex = `${options?.flex ?? 1}`
     this.div = div
 
@@ -53,10 +54,15 @@ export class AtomHandler {
     div.appendChild(inputDiv)
     this.inputDiv = inputDiv
 
+    // Select(Enum):
     if (Array.isArray(type)) {
       this.createSelect(type)
     }
-
+    // Slider:
+    else if (type === 'slider') {
+      this.createSlider()
+    }
+    // Number or String:
     else {
       this.createInput()
     }
@@ -84,16 +90,16 @@ export class AtomHandler {
   }
 
   initDraggable() {
-    this.labelElement!.classList.add(styles.draggable)
+    this.labelElement!.classList.add(s.draggable)
     let preventDiv: HTMLDivElement | null = null
     let valueOnDragStart: number = 0
     handlePointer(this.labelElement!, {
       onHorizontalDragStart: () => {
         this.focus()
-        this.div.classList.add(styles.dragging)
+        this.div.classList.add(s.dragging)
 
         preventDiv = document.createElement('div')
-        preventDiv.classList.add(styles.WhileDragging)
+        preventDiv.classList.add(s.WhileDragging)
         document.body.appendChild(preventDiv)
 
         valueOnDragStart = this.singleValue
@@ -102,7 +108,7 @@ export class AtomHandler {
       },
       onHorizontalDragStop: () => {
         this.blur()
-        this.div.classList.remove(styles.dragging)
+        this.div.classList.remove(s.dragging)
 
         preventDiv?.remove()
 
@@ -142,11 +148,60 @@ export class AtomHandler {
       }],
     ])
 
-    input.onfocus = () => {
-      this.focus()
+    input.onfocus = () => this.focus()
+    input.onblur = () => this.blur()
+  }
+
+  createSlider() {
+    const sliderDiv = document.createElement('div')
+    this.inputDiv.appendChild(sliderDiv)
+    sliderDiv.className = s.Slider
+
+    const slider = document.createElement('input')
+    sliderDiv.appendChild(slider)
+    slider.type = 'range'
+    slider.min = '0'
+    slider.max = '1'
+    slider.step = 'any'
+    slider.id = this.getInputId()
+    slider.name = this.getInputName()
+    this.element = slider
+
+    const progressBar = document.createElement('div')
+    sliderDiv.appendChild(progressBar)
+    progressBar.className = s.ProgressBar
+
+    const thinBar = document.createElement('div')
+    sliderDiv.appendChild(thinBar)
+    thinBar.className = s.ThinBar
+
+    const overshootUpperBar = document.createElement('div')
+    sliderDiv.appendChild(overshootUpperBar)
+    overshootUpperBar.className = `${s.OvershootUpperBar} ${s.hidden}`
+
+    const overshootLowerBar = document.createElement('div')
+    sliderDiv.appendChild(overshootLowerBar)
+    overshootLowerBar.className = `${s.OvershootLowerBar} ${s.hidden}`
+
+    function updateSliderDivs(sliderValue: number) {
+      progressBar.style.width = `${clamp01(sliderValue) * 100}%`
+      thinBar.style.left = `calc(${sliderValue} * (100% - 2px))`
+      overshootLowerBar.classList.toggle(s.hidden, sliderValue >= 0)
+      overshootUpperBar.classList.toggle(s.hidden, sliderValue <= 1)
     }
-    input.onblur = () => {
-      this.blur()
+
+    slider.oninput = () => {
+      const sliderValue = Number.parseFloat(slider.value)
+      updateSliderDivs(sliderValue)
+      this.inputListeners.onInput?.(this.atomType[0], slider.value)
+    }
+
+    slider.onfocus = () => this.focus()
+    slider.onblur = () => this.blur()
+
+    this.onExternalUpdate = () => {
+      const sliderValue = Number.parseFloat(this.singleValue)
+      updateSliderDivs(sliderValue)
     }
   }
 
@@ -164,25 +219,22 @@ export class AtomHandler {
       select.appendChild(optionElement)
     }
 
-    select.onfocus = () => {
-      this.focus()
-    }
-    select.onblur = () => {
-      this.blur()
-    }
+    select.onfocus = () => this.focus()
+    select.onblur = () => this.blur()
   }
 
   focus() {
     this.focused = true
-    this.div.classList.add(styles.focus)
+    this.div.classList.add(s.focus)
   }
 
   blur() {
     this.focused = false
-    this.div.classList.remove(styles.focus)
+    this.div.classList.remove(s.focus)
   }
 
   update(values: any[]) {
+    // If the input is focused, don't update it (the user is typing):
     if (this.focused) {
       return
     }
@@ -194,6 +246,7 @@ export class AtomHandler {
     this.singleValue = singleValue
     this.isMultiple = isMultiple
 
+    // Select(Enum):
     if (Array.isArray(type)) {
       const select = this.element as HTMLSelectElement
       if (select.value !== singleValue) {
@@ -201,10 +254,18 @@ export class AtomHandler {
       }
     }
 
+    // Slider:
+    else if (type === 'slider') {
+      const slider = this.element as HTMLInputElement
+      slider.value = singleValue
+      this.onExternalUpdate()
+    }
+
+    // Number or String:
     else if (type === 'number' || type === 'string') {
       const input = this.element as HTMLInputElement
 
-      this.div.classList.toggle(styles.multiple, isMultiple)
+      this.div.classList.toggle(s.multiple, isMultiple)
       if (isMultiple) {
         input.value = ''
       }

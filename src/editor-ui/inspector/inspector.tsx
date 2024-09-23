@@ -1,9 +1,17 @@
-import { BufferGeometry } from 'three'
+import '@fontsource/fira-code'
+import '@fontsource/inter'
+import { useMemo } from 'react'
+import { BufferGeometry, Vector3 } from 'three'
+
+import { useEffects } from 'some-utils-react/hooks/effects'
+import { Observable } from 'some-utils-ts/observables'
+import { onTick } from 'some-utils-ts/ticker'
 
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
-
 import { Foldable } from '../components/foldable'
 import { Separator } from '../panel/Separator'
+
+import { InlineInput } from './inputs/inline-input'
 import { Title } from './title'
 import { TransformPanel } from './transform/transform'
 
@@ -62,18 +70,33 @@ function AutoPanel() {
   )
 }
 
-function Slider() {
-  return (
-    <input type='range' />
-  )
-}
-
 function UserDataPanel() {
+  // TODO: Implement custom properties inspection!
+  const dummy = useMemo(() => ({ transition: 0 }), [])
+  useEffects(function* () {
+    const obs = new Observable(dummy.transition)
+    obs.onChange(value => console.log(`transition: ${value}`))
+    yield onTick({ timeInterval: 1 / 12 }, () => {
+      obs.value = dummy.transition
+    })
+  }, [])
+
   return (
     <Foldable
       title='User Data'
       content={() => (
-        null
+        <>
+          <InlineInput
+            label='position'
+            value={[new Vector3(1, 2, 3)]}
+          />
+          <InlineInput
+            label='transition'
+            mode='slider'
+            onInput={(_, value) => dummy.transition = Number.parseFloat(value)}
+            value={[dummy]}
+          />
+        </>
       )}
     />
   )
