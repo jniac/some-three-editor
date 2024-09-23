@@ -39,7 +39,7 @@ function* handleInlineInput(
     // Add an extra input for sliders:
     if (atomType[1] === 'slider') {
       const [label, _, options] = atomType
-      const extraAtomType = [label, 'number', { ...options, flex: '.5' }] as AtomicInputType
+      const extraAtomType = [label, 'number', { ...options, flex: '.3' }] as AtomicInputType
       const extraInput = new AtomicInputHandler(label, extraAtomType, inputOptions, inputListeners)
       inputs.push(extraInput)
     }

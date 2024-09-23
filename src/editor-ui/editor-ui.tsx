@@ -1,13 +1,15 @@
 'use client'
 
+import { CSSProperties, ReactNode } from 'react'
 import { Camera } from 'three'
 
-
+import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
+import { useEffects } from 'some-utils-react/hooks/effects'
 import { makeClassName as mc } from 'some-utils-react/utils/classname'
-import { useEditor, useEditorRenderOnRefresh } from '../editor-provider'
 
 import { InfoSvg } from '../svg/InfoSvg'
 
+import { useEditor, useEditorRenderOnRefresh } from '../editor-provider'
 import { Foldable } from './components/foldable'
 import { HierachyPanel } from './hierarchy'
 import { HistoryPanel } from './history'
@@ -16,13 +18,12 @@ import { Layout } from './layout/layout'
 import { OrbitControlsPanel } from './misc/orbit-controls'
 import { Panel } from './panel'
 import { SelectionPanel } from './selection'
+import { initThreeDisplayNames } from './three-display-names'
 import { Toolbar } from './toolbar'
 
-import { CSSProperties, ReactNode } from 'react'
-
-import { handleKeyboard } from 'some-utils-dom/handle/keyboard'
-import { useEffects } from 'some-utils-react/hooks/effects'
 import ms from './main.module.css'
+
+initThreeDisplayNames()
 
 function InfoPanel() {
   return (

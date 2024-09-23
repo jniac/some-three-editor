@@ -13,6 +13,10 @@
   flex-direction: column;
 }
 
+.TitleSingle h1 {
+  font-size: var(--font-size-large);
+}
+
 .TitleSingle .Parent {
   font-size: var(--font-size-small);
   display: flex;

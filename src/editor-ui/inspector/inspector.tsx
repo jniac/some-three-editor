@@ -19,13 +19,13 @@ import styles from './inspector.module.css'
 
 function GeometryPanel({ geometry }: { geometry: BufferGeometry }) {
   return (
-    <div style={{ fontSize: 'var(--font-size-small)' }}>
+    <div>
       <Foldable
         title='Geometry'
         content={() => (
           <>
             <div style={{ fontSize: 'var(--font-size-tiny)' }}>{geometry.uuid}</div>
-            <div className={styles.Geometry}>
+            <div className={styles.Geometry} style={{ fontSize: 'var(--font-size-small)' }}>
               <div>vertices: {geometry.attributes.position?.count ?? 'ø'}</div>
               {geometry.index && (
                 <div>triangles (index): {geometry.index.count / 3}</div>

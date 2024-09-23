@@ -48,7 +48,7 @@ export function EditorProvider(props: Props) {
   const editor = useMemo(() => new EditorContext(three), [])
   useEffects(function* () {
     // Refresh the editor when the three context is likely to have changed.
-    yield three.onAfterLoad(() => {
+    yield three.loader.onAfterLoad(() => {
       editor.requestRefresh()
     })
   }, [])

@@ -90,7 +90,7 @@ function TitleSingle({
       >
         {name
           ? <span>{name}</span>
-          : <span style={{ fontStyle: 'italic' }}>{object.constructor.name}</span>
+          : <span style={{ fontStyle: 'italic' }}>{(object.constructor as any)['displayName'] ?? object.constructor.name}</span>
         }
 
         <div
