@@ -37,6 +37,7 @@ export type AtomicInputType = [
   type:
   | 'number'
   | 'string'
+  | 'slider'
   | string[], // enums
 
   options?: Partial<{
