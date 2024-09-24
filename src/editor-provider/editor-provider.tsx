@@ -6,6 +6,7 @@ import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
 
 import { EditorContext } from '../editor-context/editor'
 import { EditorUI, EditorUIProps } from '../editor-ui'
+import { ThreeProvider, useThree } from './three-provider'
 
 const context = createContext<EditorContext>(null!)
 
@@ -43,6 +44,10 @@ type Props = EditorUIProps & {
   three: ThreeWebglContext
 }
 
+/**
+ * Provide the editor context, but not the three context which has to be given
+ * via the `three` prop.
+ */
 export function EditorProvider(props: Props) {
   const { three, ...rest } = props
   const editor = useMemo(() => new EditorContext(three), [])
@@ -56,5 +61,20 @@ export function EditorProvider(props: Props) {
     <context.Provider value={editor}>
       <EditorUI {...rest} />
     </context.Provider>
+  )
+}
+
+/**
+ * Provide both the three and editor context.
+ */
+export function ThreeAndEditorProvider(props: Omit<Props, 'three'>) {
+  function EditorProviderWithThree() {
+    const three = useThree()
+    return <EditorProvider {...props} three={three} />
+  }
+  return (
+    <ThreeProvider>
+      <EditorProviderWithThree />
+    </ThreeProvider>
   )
 }

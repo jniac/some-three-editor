@@ -77,16 +77,13 @@ function CameraPanel() {
 }
 
 const defaultProps = {
+  hidden: false,
   backgroundColor: '#0006',
 }
 
 type Props = Partial<typeof defaultProps> & { children?: ReactNode }
 
 export function EditorUI(props: Props) {
-  const {
-    children,
-    backgroundColor,
-  } = { ...defaultProps, ...props }
   const editor = useEditor()
 
   useEffects(function* () {
@@ -96,6 +93,9 @@ export function EditorUI(props: Props) {
       }],
     ])
   }, [])
+
+  const { children, backgroundColor, hidden } = { ...defaultProps, ...props }
+  editor.uiVisibility.set(!hidden)
 
   const style = {
     '--background-color': backgroundColor,
