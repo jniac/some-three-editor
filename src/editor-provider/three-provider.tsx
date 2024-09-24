@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, HTMLAttributes, useContext, useLayoutEffect, useMemo, useState } from 'react'
+import { createContext, HTMLAttributes, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { Group, Object3D } from 'three'
 
 import { useEffects, UseEffectsCallback, UseEffectsDeps, UseEffectsReturnable, UseEffectsState } from 'some-utils-react/hooks/effects'
@@ -21,13 +21,57 @@ export function useIsClient() {
   return isClient
 }
 
+/**
+ * Returns a function that returns true on the second render.
+ * 
+ * This is useful to prevent effects from running twice in StrictMode. Otherwise
+ * every effect can be executed twice, which can lead to unexpected behavior when
+ * it is about adding objects to the scene.
+ * 
+ * NOTE: 
+ * - This is a workaround and should be used with caution.
+ * - This works ONLY if there are no dependencies in the effect.
+ * 
+ * Usage:
+ * ```
+ * function MyComponent() {
+ *   const isDuplicate = useIsReactStricModeDuplicate()
+ *   useEffect(() => {
+ *     if (isDuplicate()) {
+ *       return
+ *     }
+ *     // Do something
+ *   }, [])
+ *   return null
+ * }
+ * ```
+ */
+function useIsReactStricModeDuplicate() {
+  const isSecondRender = useRef(false)
+  return () => {
+    if (isSecondRender.current) {
+      return true
+    }
+    isSecondRender.current = true
+    return false
+  }
+}
+
 export function useThree(
   effects?: UseEffectsCallback<ThreeWebglContext>,
   deps?: UseEffectsDeps,
 ): ThreeWebglContext {
   const three = useContext(reactThreeContext)
 
+  const isDuplicate = useIsReactStricModeDuplicate()
+
   useEffects(async function* (_, state) {
+    // It is important to prevent the effects from running twice in StrictMode,
+    // otherwise every effect/object will be added twice to the scene.
+    if (isDuplicate()) {
+      return
+    }
+
     if (effects) {
       const it = effects(three, state)
       if (it && typeof it.next === 'function') {
@@ -129,6 +173,7 @@ export function ThreeInstance<T extends Object3D>(props: ThreeInstanceProps<T>) 
       instance.removeFromParent()
     }
   }, [])
+
   return null
 }
 
@@ -143,12 +188,13 @@ type Props = HTMLAttributes<HTMLDivElement> & Partial<typeof defaultProps>
 
 function ServerProofThreeProvider(props: Props) {
   const { children, className, assetsPath } = { ...defaultProps, ...props }
+
   const three = useMemo(() => new ThreeWebglContext(), [])
+  three.loader.setPath(assetsPath)
 
   const { ref } = useEffects<HTMLDivElement>(function* (div) {
-    three.loader.setPath(assetsPath)
     yield three.init(div)
-  }, [assetsPath])
+  }, [])
 
   return (
     <div ref={ref} className={`${s.ThreeProvider} ${className}`}>
