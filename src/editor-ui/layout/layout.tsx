@@ -178,10 +178,10 @@ export function Layout(props: Partial<{
 
   return (
     <div ref={ref} className={mc(s.Layout, ms.Abs0, ms.Thru)}>
-      <div className={`${ms.Root} bottom-bar`}>{props.bottomBar ?? <Placeholder />}</div>
-      <div className={`${ms.Root} top-bar`}>{props.topBar ?? <Placeholder />}</div>
-      <div className={`${ms.Root} left-col`}>{props.leftCol ?? <Placeholder />}</div>
-      <div className={`${ms.Root} right-col`}>{props.rightCol ?? <Placeholder />}</div>
+      <div className={`${ms.EditorUI} bottom-bar`}>{props.bottomBar ?? <Placeholder />}</div>
+      <div className={`${ms.EditorUI} top-bar`}>{props.topBar ?? <Placeholder />}</div>
+      <div className={`${ms.EditorUI} left-col`}>{props.leftCol ?? <Placeholder />}</div>
+      <div className={`${ms.EditorUI} right-col`}>{props.rightCol ?? <Placeholder />}</div>
       <div className={mc('viewport', ms.Thru)}>
         <div
           className={mc('viewport-frame', ms.Abs0, ms.Thru)}

@@ -102,7 +102,7 @@ export function EditorUI(props: Props) {
   } as CSSProperties
 
   return (
-    <div className={mc(ms.EditorUI, ms.Abs0, ms.Thru)} style={style}>
+    <div className={mc(ms.Abs0, ms.Thru)} style={style}>
       <Layout
         topBar={<Toolbar />}
         leftCol={

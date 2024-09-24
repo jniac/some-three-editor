@@ -1,8 +1,4 @@
-/* 
-  `.Root` is associated to each top editor panel div, to avoid leak CSS rules to
-  the rest of the page (through the "viewport" panel).
-*/
-.EditorUI .Root {
+.EditorUI {
   --font-size-large: 18px;
   --font-size-regular: 14px;
   --font-size-small: 11px;
@@ -18,7 +14,7 @@
   color: #fff9;
 }
 
-.EditorUI .Root  * {
+.EditorUI  * {
   box-sizing: border-box;
   position: relative;
 }
