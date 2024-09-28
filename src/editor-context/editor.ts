@@ -4,7 +4,7 @@ import { TransformControls } from 'three/addons/controls/TransformControls.js'
 import yaml from 'yaml'
 
 import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
-import { isParentOf } from 'some-utils-three/utils/parenting'
+import { isAncestorOf } from 'some-utils-three/utils/tree'
 import { destroy } from 'some-utils-ts/misc/destroy'
 import { Observable, ObservableNumber } from 'some-utils-ts/observables'
 import { Destroyable } from 'some-utils-ts/types'
@@ -135,7 +135,7 @@ export class EditorContext {
     // That should not happen. The TransformControls should be detached when the object is removed from the scene. 
     yield three.ticker.onTick(() => {
       if (transformControls.object) {
-        if (!isParentOf(three.scene, transformControls.object)) {
+        if (!isAncestorOf(three.scene, transformControls.object)) {
           transformControls.detach()
         }
       }
