@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, HTMLAttributes, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { Group, Object3D } from 'three'
+import { Group, Mesh, Object3D } from 'three'
 
 import { useEffects, UseEffectsCallback, UseEffectsDeps, UseEffectsReturnable, UseEffectsState } from 'some-utils-react/hooks/effects'
 import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
@@ -169,6 +169,16 @@ export function ThreeInstance<T extends Object3D>(props: ThreeInstanceProps<T>) 
       yield* (instance as any).threeInit(three)
     }
     yield () => {
+      instance.traverse(child => {
+        if (child instanceof Mesh) {
+          child.geometry.dispose()
+          child.material.dispose()
+        }
+
+        if ('destroy' in child) {
+          (child as any).destroy()
+        }
+      })
       instance.clear()
       instance.removeFromParent()
     }
