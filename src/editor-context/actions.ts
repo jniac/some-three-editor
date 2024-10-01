@@ -60,7 +60,6 @@ export function hierarchyDeployAll(editor: EditorContext, scope: Object3D) {
   while (queue.length > 0) {
     const current = queue.shift()!
     editor.metadata.get(current).set('hierarchyOpen', true)
-    console.log(current)
     queue.push(...current.children)
   }
 }
