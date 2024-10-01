@@ -62,7 +62,7 @@ function TransformInspector({
   return (
     <div className={s.TransformPanel}>
       <InlineInput
-        label='Position'
+        mainLabel='Position'
         value={objects.map(object => object.position)}
         onInput={onInput('position')}
         onDragStart={dragStart('position')}
@@ -70,7 +70,7 @@ function TransformInspector({
         onDragEnd={dragEnd}
       />
       <InlineInput
-        label='Rotation'
+        mainLabel='Rotation'
         value={objects.map(object => object.rotation)}
         onInput={onInput('rotation')}
         onDragStart={dragStart('rotation')}
@@ -78,7 +78,7 @@ function TransformInspector({
         onDragEnd={dragEnd}
       />
       <InlineInput
-        label='Scale'
+        mainLabel='Scale'
         value={objects.map(object => object.scale)}
         onInput={onInput('scale')}
         onDragStart={dragStart('scale')}

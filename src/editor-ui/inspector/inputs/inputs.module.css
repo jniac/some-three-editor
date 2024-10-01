@@ -47,6 +47,7 @@
   flex-direction: row;
   gap: .25em;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .AtomicInput {

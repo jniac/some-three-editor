@@ -4,25 +4,38 @@ export type InputMode =
   | null
   | 'slider'
 
-export type InputMetadata = {
-  mode: InputMode
-  props: Record<string, any>
+export class InputMetadata {
+  name: string | null = null
+  mode: InputMode = null
+  props: Record<string, any> = {}
 }
 
-export const defaultMetadata: InputMetadata = {
-  mode: null,
-  props: {},
-}
+export const defaultMetadata = new InputMetadata()
 
 export function parseInputMetadata(str: string): InputMetadata {
   str = str.trim()
 
-  if (/^slider/i.test(str)) {
-    const paramsStr = str.slice('Slider'.length + 1, -1).trim()
-    const props = parseSliderProps(paramsStr)
-    return { mode: 'slider', props }
+  const chunks = str.split(/\s*[;\n]\s*/)
+
+  const metadata: InputMetadata = new InputMetadata()
+
+  for (const chunk of chunks) {
+    if (/^Slider/i.test(chunk)) {
+      const paramsStr = chunk.slice('Slider'.length + 1, -1).trim()
+      const props = parseSliderProps(paramsStr)
+      metadata.mode = 'slider'
+      Object.assign(metadata.props, props)
+    }
+
+    else if (/^Name/i.test(chunk)) {
+      metadata.name = chunk.slice('Name'.length + 1, -1).trim()
+    }
+
+    else {
+      throw new Error(`Invalid property metadata: ${str} (chunk: ${chunk})`)
+    }
   }
 
-  throw new Error(`Invalid property metadata: ${str}`)
+  return metadata
 }
 

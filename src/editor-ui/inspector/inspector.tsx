@@ -122,11 +122,11 @@ function UserDataPanel({ userData }: { userData: any }) {
         {extractUserDataProperties(userData).map(prop => (
           <InlineInput
             key={prop.key}
-            label={prop.key}
+            mainLabel={prop.key}
             value={[userData]}
             metadata={prop.meta}
             template={[[prop.key, 'number', { key: null }]]}
-            onInput={(key, value) => {
+            onInput={(_, value) => {
               userData[prop.key] = Number.parseFloat(value)
             }}
           />

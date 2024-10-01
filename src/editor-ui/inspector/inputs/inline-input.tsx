@@ -24,7 +24,7 @@ function* handleInlineInput(
 ) {
   const mainLabelElement = document.createElement('div')
   mainLabelElement.className = s.MainLabel
-  mainLabelElement.textContent = `• ${mainLabel}`
+  mainLabelElement.textContent = `• ${inputMetadata.name ?? mainLabel}`
   container.appendChild(mainLabelElement)
 
   const wrapper = document.createElement('div')
@@ -63,7 +63,7 @@ function* handleInlineInput(
 }
 
 type InlineInputProps<T> = Partial<InputListeners & {
-  label: string
+  mainLabel: string
   metadata: InputMetadata
   mode: InputMode // Probably not the good name...
   template: Template
@@ -73,8 +73,8 @@ type InlineInputProps<T> = Partial<InputListeners & {
 
 export function InlineInput<T extends object>(props: InlineInputProps<T>) {
   const {
-    label: mainLabel = '...',
-    metadata = { mode: null, props: {} },
+    mainLabel = '...',
+    metadata = new InputMetadata(),
     template: templateArg,
     options,
     value,
