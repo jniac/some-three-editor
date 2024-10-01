@@ -49,6 +49,7 @@ export class EditorContext {
   spaceMode = new Observable(SpaceMode.Local)
 
   orbitControls = new OrbitControls(this.three.perspectiveCamera, this.three.renderer.domElement)
+  useOrbitControls = true
   transformControls = new TransformControls(this.three.perspectiveCamera, this.three.renderer.domElement)
 
   /**
@@ -112,7 +113,7 @@ export class EditorContext {
       three.pointer.event.reset()
     })
     yield three.ticker.onTick({ order: 1 }, () => {
-      orbitControls.enabled = (three.pointer.event.consumed === false) && userIsEditingTransform.value === false
+      orbitControls.enabled = this.useOrbitControls && (three.pointer.event.consumed === false) && userIsEditingTransform.value === false
     })
 
     // Handling transform + undo/redo
