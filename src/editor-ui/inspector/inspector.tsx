@@ -111,17 +111,37 @@ function extractUserDataProperties(userData: any) {
 
   const keys = Object.keys(userData)
   for (const key of keys) {
+    const value = userData[key]
+
+    // Support for links:
+    // (Links are objects that are recursively parsed)
+    if (key === 'links' && Array.isArray(value)) {
+      // Support is hard. Skipping for now.
+      // for (const link of value) {
+      //   if (typeof link === 'object') {
+      //     properties.push(...extractUserDataProperties(link))
+      //   }
+      // }
+      continue
+    }
+
+    // Skip objects for now:
+    // TODO: Must support { value, meta? } objects.
+    if (value && typeof value === 'object') {
+      continue
+    }
+
     // Metadata entry:
     if (key.endsWith('_meta')) {
       const originalKey = key.slice(0, -5)
       const property = assignOrCreate(originalKey)
-      property.meta = parseInputMetadata(userData[key])
+      property.meta = parseInputMetadata(value)
     }
 
     // Value entry:
     else {
       const property = assignOrCreate(key)
-      property.value = userData[key]
+      property.value = value
     }
   }
 

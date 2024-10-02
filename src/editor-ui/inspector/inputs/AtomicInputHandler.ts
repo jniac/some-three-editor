@@ -283,9 +283,14 @@ export class AtomicInputHandler {
       }
 
       else {
-        const newValue = type === 'number' ? formatNumber(singleValue) : singleValue
-        if (input.value !== newValue) {
-          input.value = newValue
+        try {
+          const newValue = type === 'number' ? formatNumber(singleValue) : singleValue
+          if (input.value !== newValue) {
+            input.value = newValue
+          }
+        }
+        catch (error) {
+          console.log('???', key, singleValue)
         }
       }
     }
