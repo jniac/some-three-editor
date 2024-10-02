@@ -1,4 +1,4 @@
-import { BufferGeometry } from 'three'
+import { BufferGeometry, Material } from 'three'
 
 import { useEditor, useEditorRenderOnRefresh } from '../../editor-provider'
 import { Foldable } from '../components/foldable'
@@ -59,11 +59,24 @@ function AutoPanel() {
   }
 
   if (object && objects.length === 1) {
+    // User data:
     if ('userData' in object) {
       const keys = Object.keys(object.userData)
       if (keys.length > 0) {
         children.push(<Separator key={children.length} />)
         children.push(<UserDataPanel key='userData' userData={object.userData} />)
+      }
+    }
+
+    // Material user data:
+    if ('material' in object) {
+      const material = object.material
+      if (material instanceof Material && 'userData' in material) {
+        const keys = Object.keys(material.userData)
+        if (keys.length > 0) {
+          children.push(<Separator key={children.length} />)
+          children.push(<UserDataPanel key='materialUserData' inParentheses='material' userData={material.userData} />)
+        }
       }
     }
   }
@@ -115,30 +128,35 @@ function extractUserDataProperties(userData: any) {
   return properties
 }
 
-function UserDataPanel({ userData }: { userData: any }) {
-  function Content() {
-    return (
-      <>
-        {extractUserDataProperties(userData).map(prop => (
-          <InlineInput
-            key={prop.key}
-            mainLabel={prop.key}
-            value={[userData]}
-            metadata={prop.meta}
-            template={[[prop.key, 'number', { key: null }]]}
-            onInput={(_, value) => {
-              userData[prop.key] = Number.parseFloat(value)
-            }}
-          />
-        ))}
-      </>
-    )
-  }
+function UserDataPanel_Content({ userData }: { userData: any }) {
+  return (
+    <>
+      {extractUserDataProperties(userData).map(prop => (
+        <InlineInput
+          key={prop.key}
+          mainLabel={prop.key}
+          value={[userData]}
+          metadata={prop.meta}
+          template={[[prop.key, 'number', { key: null }]]}
+          onInput={(_, value) => {
+            userData[prop.key] = Number.parseFloat(value)
+          }}
+        />
+      ))}
+    </>
+  )
+}
 
+function UserDataPanel(props: { inParentheses?: string } & Parameters<typeof UserDataPanel_Content>[0]) {
+  const {
+    inParentheses,
+    ...rest
+  } = props
+  const title = 'User Data' + (inParentheses ? ` (${inParentheses})` : '')
   return (
     <Foldable
-      title='User Data'
-      content={Content}
+      title={title}
+      content={() => <UserDataPanel_Content {...rest} />}
     />
   )
 }
