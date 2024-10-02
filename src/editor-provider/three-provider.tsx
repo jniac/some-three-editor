@@ -203,7 +203,7 @@ function ServerProofThreeProvider(props: Props) {
   three.loader.setPath(assetsPath)
 
   const { ref } = useEffects<HTMLDivElement>(function* (div) {
-    yield three.init(div)
+    yield three.initialize(div)
   }, [])
 
   return (
