@@ -1,5 +1,7 @@
 .Toolbar {
-  padding: .25em;
+  display: flex;
+  flex-direction: row;
+  justify-self: center;
 }
 
 .Wrapper {
@@ -7,7 +9,12 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: .25em 1em;
   gap: .5em;
+  border-radius: .25em;
+
+  backdrop-filter: blur(16px);
+  border: 1px solid #fff2;
   
   /* mix-blend-mode: multiply; */
 }
@@ -21,6 +28,8 @@
   gap: 0.25em;
   cursor: pointer;
   transition: color 0.2s;
+
+  user-select: none;
 }
 
 .ToolbarButton span {

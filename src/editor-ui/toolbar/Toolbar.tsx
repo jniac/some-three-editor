@@ -11,7 +11,7 @@ import SelectSvg from '../../svg/pure/select.svg'
 import TranslateSvg from '../../svg/pure/translate.svg'
 import WorldSvg from '../../svg/pure/world.svg'
 
-import styles from './styles.module.css'
+import styles from './toolbar.module.css'
 
 function SpaceButton() {
   const editor = useEditor()
@@ -20,7 +20,7 @@ function SpaceButton() {
   return (
     <button
       className={styles.ToolbarButton}
-      style={{ flex: '0 0 3.5em' }}
+      style={{ flex: '0 0 4em', width: '4em' }}
       onClick={() => {
         editor.spaceMode.set(
           spaceMode === SpaceMode.World
