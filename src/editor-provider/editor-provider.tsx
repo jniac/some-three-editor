@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo } from 'react'
+import { createContext, memo, useContext, useEffect, useMemo } from 'react'
 
 import { useEffects, UseEffectsReturnable } from 'some-utils-react/hooks/effects'
 import { useTriggerRender } from 'some-utils-react/hooks/render'
@@ -68,10 +68,11 @@ export function EditorProvider(props: Props) {
  * Provide both the three and editor context.
  */
 export function ThreeAndEditorProvider(props: Omit<Props, 'three'>) {
-  function EditorProviderWithThree() {
+  const EditorProviderWithThree = memo(function () {
     const three = useThree()
     return <EditorProvider {...props} three={three} />
-  }
+  })
+
   return (
     <ThreeProvider>
       <EditorProviderWithThree />
