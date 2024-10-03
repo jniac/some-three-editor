@@ -63,3 +63,9 @@ export function hierarchyDeployAll(editor: EditorContext, scope: Object3D) {
     queue.push(...current.children)
   }
 }
+
+export function hierarchyDeployDownTo(editor: EditorContext, scope: Object3D) {
+  scope.traverseAncestors(ancestor => {
+    editor.metadata.get(ancestor).set('hierarchyOpen', true)
+  })
+}

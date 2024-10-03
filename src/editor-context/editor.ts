@@ -24,7 +24,14 @@ import { SpaceMode, ToolType } from './types'
  */
 export class EditorContext {
   static instances: EditorContext[] = []
-  static current = () => EditorContext.instances[EditorContext.instances.length - 1]
+  static current(callback?: (instance: EditorContext) => void) {
+    const instance = EditorContext.instances[EditorContext.instances.length - 1]
+    if (!instance) {
+      throw new Error('No editor context found.')
+    }
+    callback?.(instance)
+    return instance
+  }
 
   destroyables = [] as Destroyable[]
 

@@ -2,6 +2,11 @@ import { some } from 'some-utils-ts/iteration/high-order'
 
 import { NodeInfo } from './NodeInfo'
 
+/**
+ * 2 cases: 
+ * - Highlight the selected nodes.
+ * - Highlight the collapsed nodes that contain selected nodes (very important feedback).
+ */
 export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
   class Block {
     nodes: number[] = [];
@@ -55,6 +60,7 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
                   x2={'calc(100% - 2.5px)'}
                   y1={ly}
                   y2={ly}
+                  opacity={.5}
                 />
               )
             })}
@@ -92,7 +98,7 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
       height='100%'
     >
       <g
-        fill='#ffffff11'
+        fill='#ffffff09'
         stroke='#ffffff33'
         strokeWidth='1'
       >
@@ -101,7 +107,7 @@ export function HierarchySelectionHighlight({ tree }: { tree: NodeInfo }) {
 
       <g
         fill='none'
-        stroke='#ffffff33'
+        stroke='#ffffff22'
         strokeWidth='1'
       >
         {containsSelected.generateSvgContent()}

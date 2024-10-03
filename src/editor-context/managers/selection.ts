@@ -113,6 +113,12 @@ export class SelectionManager<T extends object> {
     return this._set.has(object)
   }
 
+  get count() { return this._set.size }
+
+  at(index: number): T | null {
+    return [...this._set.value][index] ?? null
+  }
+
   get size(): number {
     return this._set.size
   }
