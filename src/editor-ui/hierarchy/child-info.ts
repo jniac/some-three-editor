@@ -1,6 +1,6 @@
 import { Object3D } from 'three'
 
-import { EditorContext, Scope, Visibility } from '@/contexts/editor'
+import { EditorContext, Scope, Visibility } from '../../editor-context'
 
 export function computeDepth(object: Object3D) {
   let depth = 0
