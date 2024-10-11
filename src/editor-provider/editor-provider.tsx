@@ -41,7 +41,11 @@ export function useEditorRenderOnRefresh() {
 }
 
 type Props = EditorUIProps & {
-  three: ThreeWebglContext
+  /**
+   * If no three context is provided, the editor will use the one from the
+   * ThreeProvider.
+   */
+  three?: ThreeWebglContext
 }
 
 /**
@@ -49,7 +53,13 @@ type Props = EditorUIProps & {
  * via the `three` prop.
  */
 export function EditorProvider(props: Props) {
-  const { three, ...rest } = props
+  const {
+    three = useThree(),
+    ...rest
+  } = props
+  if (!three) {
+    throw new Error('No three context found: Neither provided nor in context.')
+  }
   const editor = useMemo(() => new EditorContext(three), [])
   useEffects(function* () {
     // Refresh the editor when the three context is likely to have changed.
