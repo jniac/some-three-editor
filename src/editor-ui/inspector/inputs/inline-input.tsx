@@ -1,6 +1,7 @@
 
 
 import { useEffects } from 'some-utils-react/hooks/effects'
+import { onTick } from 'some-utils-ts/ticker'
 
 import { EditorContext } from '../../../editor-context'
 import { useEditor } from '../../../editor-provider'
@@ -55,7 +56,7 @@ function* handleInlineInput(
     }
   }
 
-  yield editor.three.onTick({ timeInterval: 1 / 12 }, update)
+  yield onTick('some-three-editor', { timeInterval: 1 / 12 }, update)
 
   yield () => {
     container.textContent = ''
