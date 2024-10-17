@@ -166,7 +166,10 @@ export function ThreeInstance<T extends Object3D>(props: ThreeInstanceProps<T>) 
     applyTransform(instance, rest)
     three.scene.add(instance)
     if ('threeInit' in instance) {
-      yield* (instance as any).threeInit(three)
+      const result = (instance as any).threeInit(three)
+      if (result && typeof result.next === 'function') {
+        yield* result
+      }
     }
     yield () => {
       instance.traverse(child => {
