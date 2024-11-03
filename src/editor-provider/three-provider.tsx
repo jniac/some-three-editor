@@ -5,7 +5,7 @@ import { Group, Mesh, Object3D } from 'three'
 
 import { useEffects, UseEffectsCallback, UseEffectsDeps, UseEffectsEffect, UseEffectsReturnable, } from 'some-utils-react/hooks/effects'
 import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
-import { applyTransform, TransformProps } from 'some-utils-three/utils/tranform'
+import { applyTransform, TransformProps } from 'some-utils-three/utils/transform'
 
 import s from './three-provider.module.css'
 
