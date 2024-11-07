@@ -3,11 +3,10 @@
 import { createContext, HTMLAttributes, useContext, useLayoutEffect, useMemo, useState } from 'react'
 import { Group, Mesh, Object3D } from 'three'
 
-import { useEffects, UseEffectsCallback, UseEffectsDeps, UseEffectsEffect, UseEffectsReturnable, } from 'some-utils-react/hooks/effects'
+import { useEffects, UseEffectsCallback, UseEffectsDeps, UseEffectsEffect, UseEffectsReturnable, useLayoutEffects, } from 'some-utils-react/hooks/effects'
+import { useTriggerRender } from 'some-utils-react/hooks/render'
 import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
 import { applyTransform, TransformProps } from 'some-utils-three/utils/transform'
-
-import s from './three-provider.module.css'
 
 const reactThreeContext = createContext<ThreeWebglContext>(null!)
 
@@ -158,14 +157,18 @@ function ServerProofThreeProvider(props: Props) {
   const three = useMemo(() => new ThreeWebglContext(), [])
   three.loader.setPath(assetsPath)
 
-  const { ref } = useEffects<HTMLDivElement>({ debounce: true }, function* (div) {
+  const triggerRender = useTriggerRender()
+  const { ref } = useLayoutEffects<HTMLDivElement>({ debounce: true }, function* (div) {
     yield three.initialize(div)
+    triggerRender()
   }, [])
 
   return (
-    <div ref={ref} className={`${s.ThreeProvider} ${className}`}>
+    <div ref={ref} className={className} style={{ position: 'absolute', inset: 0 }}>
       <reactThreeContext.Provider value={three}>
-        {children}
+        {three.initialized && (
+          children
+        )}
       </reactThreeContext.Provider>
     </div>
   )
