@@ -36,7 +36,7 @@ export class EditorContext {
   destroyables = [] as Destroyable[]
 
   constructor(public three: ThreeWebglContext) {
-    three.gizmoScene.add(this.transformControls)
+    three.gizmoScene.add(this.transformControls as any)
     this.destroyables.push(...this.init())
     EditorContext.instances.push(this)
   }
@@ -57,7 +57,7 @@ export class EditorContext {
 
   orbitControls = new OrbitControls(this.three.perspectiveCamera, this.three.renderer.domElement)
   useOrbitControls = true
-  transformControls = new TransformControls(this.three.perspectiveCamera, this.three.renderer.domElement)
+  transformControls: TransformControls & Object3D = new TransformControls(this.three.perspectiveCamera, this.three.renderer.domElement) as any
 
   /**
    * Redirects to three.ticker.
