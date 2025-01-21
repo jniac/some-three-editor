@@ -16,14 +16,14 @@
     "some-utils-react": "workspace:*",
     "some-utils-three": "workspace:*",
     "some-utils-ts": "workspace:*",
-    "three": ">=0.168.0",
+    "three": ">=0.172.0",
     "yaml": "^2.5.1"
   },
   "devDependencies": {
     "@svgr/rollup": "^8.1.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18",
-    "@types/three": ">=0.168.0",
+    "@types/three": ">=0.172.0",
     "eslint-config-next": "14.2.8",
     "nextjs": "^0.0.3",
     "postcss": "^8",
