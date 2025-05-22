@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { TransformControls } from 'three/addons/controls/TransformControls.js'
 import yaml from 'yaml'
 
-import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
+import { ThreeWebGLContext } from 'some-utils-three/contexts/webgl'
 import { isAncestorOf } from 'some-utils-three/utils/tree'
 import { destroy } from 'some-utils-ts/misc/destroy'
 import { Observable, ObservableNumber } from 'some-utils-ts/observables'
@@ -35,7 +35,7 @@ export class EditorContext {
 
   destroyables = [] as Destroyable[]
 
-  constructor(public three: ThreeWebglContext) {
+  constructor(public three: ThreeWebGLContext) {
     three.gizmoScene.add(this.transformControls as any)
     this.destroyables.push(...this.init())
     EditorContext.instances.push(this)

@@ -2,7 +2,7 @@ import { createContext, memo, useContext, useEffect, useMemo } from 'react'
 
 import { useEffects, UseEffectsReturnable } from 'some-utils-react/hooks/effects'
 import { useTriggerRender } from 'some-utils-react/hooks/render'
-import { ThreeWebglContext } from 'some-utils-three/contexts/webgl'
+import { ThreeWebGLContext } from 'some-utils-three/contexts/webgl'
 
 import { EditorContext } from '../editor-context/editor'
 import { EditorUI, EditorUIProps } from '../editor-ui'
@@ -45,7 +45,7 @@ type Props = EditorUIProps & {
    * If no three context is provided, the editor will use the one from the
    * ThreeProvider.
    */
-  three?: ThreeWebglContext
+  three?: ThreeWebGLContext
 }
 
 /**
