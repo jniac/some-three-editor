@@ -36,7 +36,7 @@ export class EditorContext {
   destroyables = [] as Destroyable[]
 
   constructor(public three: ThreeWebGLContext) {
-    three.gizmoScene.add(this.transformControls as any)
+    three.gizmoScene.add(this.transformControls.getHelper())
     this.destroyables.push(...this.init())
     EditorContext.instances.push(this)
   }
