@@ -3,12 +3,13 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { TransformControls } from 'three/addons/controls/TransformControls.js'
 import yaml from 'yaml'
 
-import { ThreeWebGLContext } from 'some-utils-three/contexts/webgl'
+import { BasicPipeline, ThreeWebGLContext } from 'some-utils-three/contexts/webgl'
 import { isAncestorOf } from 'some-utils-three/utils/tree'
 import { destroy } from 'some-utils-ts/misc/destroy'
 import { Observable, ObservableNumber } from 'some-utils-ts/observables'
 import { Destroyable } from 'some-utils-ts/types'
 
+import { tryCast } from 'some-utils-ts/types/cast'
 import { initHotkeys } from './init/hotkeys'
 import { initRaycast } from './init/raycast'
 import { HistoryManager } from './managers/history'
@@ -109,7 +110,9 @@ export class EditorContext {
     yield history.onChange(requestRefreshImmediate)
     yield metadata.onChange(requestRefreshImmediate)
     yield sceneSelection.onChange(() => {
-      three.pipeline.basicPasses.outline.selectedObjects = Array.from(sceneSelection.objects)
+      tryCast(three.pipeline, BasicPipeline, pipeline => {
+        pipeline.basicPasses.outline.selectedObjects = Array.from(sceneSelection.objects)
+      })
       requestRefreshImmediate()
     })
     yield toolType.onChange(requestRefreshImmediate)
